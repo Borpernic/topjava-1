@@ -40,9 +40,10 @@ public class UserMealsUtil {
         // TODO return filtered list with correctly exceeded field
 
 
-        int sumCalories = mealList.stream().filter(userMeal -> isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)).mapToInt(p -> p.getCalories()).reduce((p1, p2) -> p1 + p2 ).orElse(0);
+        mealList.stream().collect(Collectors.groupingBy(p -> p.getDateTime().toLocalDate())).forEach((localDate, userMeals) -> userMeals.stream().mapToInt((p -> p.getCalories())).reduce((p1, p2) -> p1 + p2).orElse(0));
+        int sumCalories = 1500;
         System.out.println(sumCalories);
-        return mealList.stream().map(b -> new UserMealWithExceed(b.getDateTime(), b.getDescription(), b.getCalories(), sumCalories>caloriesPerDay)).collect(Collectors.toList());
+        return mealList.stream().map(b -> new UserMealWithExceed(b.getDateTime(), b.getDescription(), b.getCalories(), sumCalories>caloriesPerDay)).filter(userMeal -> isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)).collect(Collectors.toList());
 
     }
 
