@@ -9,7 +9,11 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static ru.javawebinar.topjava.util.TimeUtil.isBetween;
 
 /**
  * GKislin
@@ -18,29 +22,31 @@ import java.util.stream.Collectors;
 public class UserMealsUtil {
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,10,0), "Завтрак", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,13,0), "Обед", 1000),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,20,0), "Ужин", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,10,0), "Завтрак", 1000),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,13,0), "Обед", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,20,0), "Ужин", 510)
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
         final List<UserMealWithExceed> filteredWithExceeded = getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
-        filteredWithExceeded.stream().forEach(p-> System.out.println(p.toString()) );
+        filteredWithExceeded.stream().forEach(p -> accept(p));
 
 // .toLocalDate();
 //        .toLocalTime();
     }
 
-    public static List<UserMealWithExceed>  getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+    public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with correctly exceeded field
 
-        return mealList.stream().map(b->new UserMealWithExceed(b.getDateTime(),b.getDescription(),b.getCalories(),true))
-                .collect(Collectors.toList());
+
+        int sumCalories = mealList.stream().filter(userMeal -> isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)).mapToInt(p -> p.getCalories()).reduce((p1, p2) -> p1 + p2 ).orElse(0);
+        System.out.println(sumCalories);
+        return mealList.stream().map(b -> new UserMealWithExceed(b.getDateTime(), b.getDescription(), b.getCalories(), sumCalories>caloriesPerDay)).collect(Collectors.toList());
 
     }
 
-    private static void accept (UserMealWithExceed p) {
+    private static void accept(UserMealWithExceed p) {
         System.out.println(p.toString());
     }
 }
