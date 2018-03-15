@@ -4,15 +4,20 @@ import com.sun.org.apache.xml.internal.security.c14n.helper.C14nHelper;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalInt;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
 import static ru.javawebinar.topjava.util.TimeUtil.isBetween;
 
 /**
@@ -39,11 +44,9 @@ public class UserMealsUtil {
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with correctly exceeded field
 
+        Map<LocalDate, Integer> mapCaloriesPerDay = mealList.stream().collect(groupingBy(UserMeal::getDate, summingInt(UserMeal::getCalories)));
 
-        mealList.stream().collect(Collectors.groupingBy(p -> p.getDateTime().toLocalDate())).forEach((localDate, userMeals) -> userMeals.stream().mapToInt((p -> p.getCalories())).reduce((p1, p2) -> p1 + p2).orElse(0));
-        int sumCalories = 1500;
-        System.out.println(sumCalories);
-        return mealList.stream().map(b -> new UserMealWithExceed(b.getDateTime(), b.getDescription(), b.getCalories(), sumCalories>caloriesPerDay)).filter(userMeal -> isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)).collect(Collectors.toList());
+        return mealList.stream().map(b -> new UserMealWithExceed(b.getDateTime(), b.getDescription(), b.getCalories(), mapCaloriesPerDay.get(b.getDate()) > caloriesPerDay)).filter(userMeal -> isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)).collect(toList());
 
     }
 
