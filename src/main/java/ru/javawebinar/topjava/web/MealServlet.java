@@ -27,7 +27,12 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to meals");
-        List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        final String sarttime = request.getParameter("sarttime");
+        final String endtime = request.getParameter("endtime");
+        System.out.println("sarttime" + sarttime);
+        System.out.println("endtime" + endtime);
+
+        List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(meals, LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
 
         request.setAttribute("mealList", mealsWithExceeded);
         request.getRequestDispatcher("/meals.jsp").forward(request, response);

@@ -21,7 +21,7 @@
 
 </style>
 
-<form action="Meals">
+<form action="meals">
     <table border="0">
         <tr>
             <td>Время начало:</td>
