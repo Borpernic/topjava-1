@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -29,10 +29,10 @@
         </tr>
         <tr>
             <td>
-                <input type="time" name="sarttime">
+                <input type="time" name="sarttime" value="00:00">
             </td>
             <td>
-                <input type="time" name="endtime">
+                <input type="time" name="endtime" value="23:59">
             </td>
             <td>
                 <input type="submit" value="Фильтр">
