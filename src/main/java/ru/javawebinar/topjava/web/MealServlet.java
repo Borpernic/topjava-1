@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.model.MealWithExceed;
 
 import javax.servlet.ServletException;
@@ -9,13 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.util.MealsUtil.getFilteredWithExceeded;
-import static ru.javawebinar.topjava.util.MealsUtil.meals;
+import static ru.javawebinar.topjava.util.MealsUtil.sUserMeals;
 
 public class MealServlet extends HttpServlet {
 
@@ -26,7 +24,7 @@ public class MealServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("redirect to meals");
+        log.debug("redirect to sUserMeals");
          String sarttime = request.getParameter("sarttime");
          String endtime = request.getParameter("endtime");
         System.out.println("sarttime" + sarttime);
@@ -36,9 +34,9 @@ public class MealServlet extends HttpServlet {
         if (null==endtime) {endtime="23:59";
         }
 
-        List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(meals, LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
+        List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(sUserMeals, LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
 
         request.setAttribute("mealList", mealsWithExceeded);
-        request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        request.getRequestDispatcher("/sUserMeals.jsp").forward(request, response);
     }
 }

@@ -21,7 +21,7 @@
 
 </style>
 
-<form action="meals">
+<form action="userMeals">
     <table border="0">
         <tr>
             <td>Время начало:</td>
@@ -53,22 +53,22 @@
     </thead>
 
 
-    <c:forEach items="${mealList}" var="meal">
-        <jsp:useBean id="meal" scope="page" beanName="meal" type="ru.javawebinar.topjava.model.MealWithExceed"/>
+    <c:forEach items="${mealList}" var="userMeal">
+        <jsp:useBean id="userMeal" scope="page" beanName="userMeal" type="ru.javawebinar.topjava.model.MealWithExceed"/>
 
-        <c:if test="${meal.exceed}">
+        <c:if test="${userMeal.exceed}">
             <tr class="exceeded">
 
         </c:if>
-        <c:if test="${!meal.exceed}">
+        <c:if test="${!userMeal.exceed}">
             <tr class="normal">
 
         </c:if>
 
-        <td style.normal>${meal.dateTime} </td>
-        <td>${meal.description} </td>
-        <td>${meal.calories} </td>
-        <td>${meal.exceed} </td>
+        <td style.normal>${userMeal.dateTime} </td>
+        <td>${userMeal.description} </td>
+        <td>${userMeal.calories} </td>
+        <td>${userMeal.exceed} </td>
         </tr>
     </c:forEach>
 
