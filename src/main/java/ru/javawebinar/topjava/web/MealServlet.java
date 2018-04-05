@@ -37,6 +37,6 @@ public class MealServlet extends HttpServlet {
         List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(sUserMeals, LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
 
         request.setAttribute("mealList", mealsWithExceeded);
-        request.getRequestDispatcher("/sUserMeals.jsp").forward(request, response);
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 }
