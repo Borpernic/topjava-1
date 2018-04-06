@@ -70,8 +70,13 @@
         <td>${userMeal.calories} </td>
         <td>${userMeal.exceed} </td>
         </tr>
-        <fmt:parseDate value="${userMeal.dateTime}" pattern="y-M-dd' T' H:m" var="parseDate"/>
-        <fmt:formatDate value="${parseDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+<%--        <fmt:parseDate  value="${userMeal.dateTime}" var="parseDate" pattern="yyyy-MM-dd'T'hh:mm:ss" type="date"/>
+
+        <fmt:formatDate value="${parseDate}" pattern="yyyy-MM-dd HH:mm:ss"/>--%>
+
+        <fmt:parseDate value="${userMeal.dateTime}" pattern="yyyy-MM-dd HH:mm:ss" var="date"/>
+        <fmt:formatDate value="${date}" pattern="dd/MM/yyyy HH:mm" />
+
     </c:forEach>
 
 
