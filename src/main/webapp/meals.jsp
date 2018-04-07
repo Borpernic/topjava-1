@@ -74,13 +74,16 @@
             <td>${userMeal.calories} </td>
             <td>${userMeal.exceed} </td>
             <td>
-                <form action="userMeals" method="post">
-                    <button type="submit" name="deletename" value="delete&age=${userMeal.id}" class="btn-link">Delete</button>
+                <form>
+                    <p hidden><input action="delete"></p>
+                    <p hidden><input mealid="1"></p>
+                    <p><input type="submit" value="Удалить"
+                              formaction="userMeals" formmethod="post"></p>
                 </form>
+                <%--<form action="userMeals" method="post">
 
-
-
-
+                    <button type="submit" name="mealId" value="action=delete&id=${userMeal.id}" class="btn-link">Delete</button>
+                </form>--%>
             </td>
             </tr>
 
