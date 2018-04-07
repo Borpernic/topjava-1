@@ -11,7 +11,7 @@ public interface UserMealRepository {
 
     void delete(UserMeal userMeal);
 
-    UserMeal get(int id);
+    UserMeal get(long id);
 
     Collection<UserMeal> getAll ();
 

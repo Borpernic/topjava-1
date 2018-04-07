@@ -12,6 +12,10 @@ public class UserMeal {
     private final int calories;
     private long id;
 
+    public long getId() {
+        return id;
+    }
+
     public UserMeal(long id, LocalDateTime dateTime, String description, int calories) {
         this.id = id;
         this.dateTime = dateTime;
