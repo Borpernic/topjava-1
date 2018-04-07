@@ -3,13 +3,19 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDateTime;
 
 public class MealWithExceed {
-      final LocalDateTime dateTime;
+    private final long id;
 
-     final String description;
+    private final LocalDateTime dateTime;
 
-     final int calories;
+    private final String description;
 
-     final boolean exceed;
+    private final int calories;
+
+    private final boolean exceed;
+
+    public long getId() {
+        return id;
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -27,17 +33,19 @@ public class MealWithExceed {
         return exceed;
     }
 
-    public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
+    public MealWithExceed(long id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
         this.exceed = exceed;
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "UserMealWithExceed{" +
-                "dateTime=" + dateTime +
+        return "MealWithExceed{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
                 ", exceed=" + exceed +

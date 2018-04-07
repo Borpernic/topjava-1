@@ -75,7 +75,7 @@
             <td>${userMeal.exceed} </td>
             <td>
                 <form action="userMeals" method="post">
-                    <button type="submit" name="delete" value="delete" class="btn-link">Delete</button>
+                    <button type="submit" name="deletename" value="delete&age=${userMeal.id}" class="btn-link">Delete</button>
                 </form>
 
 

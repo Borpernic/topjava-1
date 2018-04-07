@@ -63,6 +63,6 @@ public static List<UserMeal> sUserMeals = Arrays.asList(
     }
 
     public static MealWithExceed createWithExceed(UserMeal userMeal, boolean exceeded) {
-        return new MealWithExceed(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), exceeded);
+        return new MealWithExceed(userMeal.getId(),userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), exceeded);
     }
 }
