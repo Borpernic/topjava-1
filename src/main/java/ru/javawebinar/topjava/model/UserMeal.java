@@ -10,13 +10,24 @@ public class UserMeal {
     private final String description;
 
     private final int calories;
+    private long id;
 
-    public UserMeal(LocalDateTime dateTime, String description, int calories) {
+    public UserMeal(long id, LocalDateTime dateTime, String description, int calories) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
     }
 
+    public UserMeal(final LocalDateTime dateTime, final String description, final int calories) {
+        this.dateTime = dateTime;
+        this.description = description;
+        this.calories = calories;
+    }
+
+    public boolean isNew() {
+        return this.id==0;
+    }
     public LocalDateTime getDateTime() {
         return dateTime;
     }
@@ -35,5 +46,9 @@ public class UserMeal {
 
     public LocalTime getTime() {
         return dateTime.toLocalTime();
+    }
+
+    public void setId(long id) {
+        this.id=id;
     }
 }

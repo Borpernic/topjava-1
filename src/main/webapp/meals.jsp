@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmtbn" uri="http://ru.topjava/functions" %>
 
 <html>
 <head>
@@ -20,28 +21,29 @@
     }
 
 </style>
+<section>
+    <form action="userMeals">
+        <table border="0">
+            <tr>
+                <td>Время начало:</td>
+                <td>Время конец:</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="time" name="sarttime" value="00:00">
+                </td>
+                <td>
+                    <input type="time" name="endtime" value="23:59">
+                </td>
+                <td>
+                    <input type="submit" value="Фильтр">
+                </td>
+            </tr>
 
-<form action="userMeals">
-    <table border="0">
-        <tr>
-            <td>Время начало:</td>
-            <td>Время конец:</td>
-        </tr>
-        <tr>
-            <td>
-                <input type="time" name="sarttime" value="00:00">
-            </td>
-            <td>
-                <input type="time" name="endtime" value="23:59">
-            </td>
-            <td>
-                <input type="submit" value="Фильтр">
-            </td>
-        </tr>
+        </table>
+    </form>
+</section>
 
-    </table>
-
-</form>
 <table border="1">
     <thead>
     <tr>
@@ -65,18 +67,15 @@
 
         </c:if>
 
-        <td style.normal>${userMeal.dateTime}</td>
+        <td style.normal>${fmtbn:formatLocalDateTime(userMeal.dateTime)}</td>
         <td>${userMeal.description} </td>
         <td>${userMeal.calories} </td>
         <td>${userMeal.exceed} </td>
+        <td></td>
         </tr>
-<%--        <fmt:parseDate  value="${userMeal.dateTime}" var="parseDate" pattern="yyyy-MM-dd'T'hh:mm:ss" type="date"/>
 
-        <fmt:formatDate value="${parseDate}" pattern="yyyy-MM-dd HH:mm:ss"/>--%>
 
-        <fmt:parseDate value="${userMeal.dateTime}" pattern="yyyy-MM-dd HH:mm:ss" var="date"/>
-        <fmt:formatDate value="${date}" pattern="dd/MM/yyyy HH:mm" />
-
+        <%-- <fmt: formatDate    value="${parseDate}" pattern="yyyy-MM-dd HH:mm:ss"/>--%>
     </c:forEach>
 
 
