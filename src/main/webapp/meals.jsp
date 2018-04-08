@@ -22,18 +22,19 @@
 
 </style>
 <section>
-    <form action="userMeals">
+    <form action="userMeals" name="filter">
         <table border="0">
             <tr>
-                <td>Время начало:</td>
-                <td>Время конец:</td>
+                <td><label for="starttime"> Время начало:</label></td>
+
+                <td><label for="starttime">Время конец:</label></td>
             </tr>
             <tr>
                 <td>
-                    <input type="time" name="sarttime" value="00:00">
+                    <input id="starttime" type="time" name="sarttime" value="00:00">
                 </td>
                 <td>
-                    <input type="time" name="endtime" value="23:59">
+                    <input id="endtime" type="time" name="endtime" value="23:59">
                 </td>
                 <td>
                     <input type="submit" value="Фильтр">
@@ -45,54 +46,56 @@
 </section>
 
 <section>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Data</th>
-            <th>Discriptions</th>
-            <th>Calories</th>
-            <th>Exceed</th>
-        </tr>
-        </thead>
-
-
-        <c:forEach items="${mealList}" var="userMeal">
-            <jsp:useBean id="userMeal" scope="page" beanName="userMeal"
-                         type="ru.javawebinar.topjava.model.MealWithExceed"/>
-
-            <c:if test="${userMeal.exceed}">
-                <tr class="exceeded">
-
-            </c:if>
-            <c:if test="${!userMeal.exceed}">
-                <tr class="normal">
-
-            </c:if>
-
-            <td style.normal>${fmtbn:formatLocalDateTime(userMeal.dateTime)}</td>
-            <td>${userMeal.description} </td>
-            <td>${userMeal.calories} </td>
-            <td>${userMeal.exceed} </td>
-            <td>
-                <form>
-                    <p hidden><input action="delete"></p>
-                    <p hidden><input mealid="1"></p>
-                    <p><input type="submit" value="Удалить"
-                              formaction="userMeals" formmethod="post"></p>
-                </form>
-                <%--<form action="userMeals" method="post">
-
-                    <button type="submit" name="mealId" value="action=delete&id=${userMeal.id}" class="btn-link">Delete</button>
-                </form>--%>
-            </td>
+    <form action="userMeals" name="meals" method="post">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Discriptions</th>
+                <th>Calories</th>
+                <th>Exceed</th>
             </tr>
+            </thead>
 
 
-            <%-- <fmt: formatDate    value="${parseDate}" pattern="yyyy-MM-dd HH:mm:ss"/>--%>
-        </c:forEach>
+            <c:forEach items="${mealList}" var="userMeal">
+                <jsp:useBean id="userMeal" scope="page" beanName="userMeal"
+                             type="ru.javawebinar.topjava.model.MealWithExceed"/>
+
+                <c:if test="${userMeal.exceed}">
+                    <tr class="exceeded">
+
+                </c:if>
+                <c:if test="${!userMeal.exceed}">
+                    <tr class="normal">
+
+                </c:if>
+
+                <td style.normal>${fmtbn:formatLocalDateTime(userMeal.dateTime)}</td>
+                <td>${userMeal.description} </td>
+                <td>${userMeal.calories} </td>
+                <td>${userMeal.exceed} </td>
+                <td>
+                    <p>
+                        <input value="delete" id="action" name="action" hidden/>
+                        <input value=${userMeal.id} id=${userMeal.id} name="id" hidden/>
+                        <button type="submit" value="Удалить">Удалить</button>
+                    </p>
+
+                        <%--<form action="userMeals" method="post">
+
+                            <button type="submit" name="mealId" value="action=delete&id=${userMeal.id}" class="btn-link">Delete</button>
+                        </form>--%>
+                </td>
+                </tr>
 
 
-    </table>
+                <%-- <fmt: formatDate    value="${parseDate}" pattern="yyyy-MM-dd HH:mm:ss"/>--%>
+            </c:forEach>
+
+
+        </table>
+    </form>
 </section>
 
 </body>

@@ -49,30 +49,28 @@ public class MealServlet extends HttpServlet {
         }
         if (null == endtime) {
             endtime = "23:59";
+        }
 
+        try {
 
-            try {
+            String action = request.getParameter("action").toString();
 
-                String action = request.getParameter("action").toString();
+            String idStr = request.getParameter("id");
+            long id = null == idStr ? 0 : Long.parseLong(request.getParameter("id"));
 
-                String idStr = request.getParameter("id");
-                long id = null == idStr? 0 : Long.parseLong(request.getParameter("id"));
-
-                log.debug("doPost" + action + " id " + id);
-                switch (action) {
-                    case "delete":
-                        userMealRepository.delete(new UserMeal(Integer.parseInt(request.getParameter("id")), null, null, 2000));
-                        break;
-                    case "save":
-                        userMealRepository.save(new UserMeal(now(), "Вечер", 2000));
-                        break;
-                }
-
-
-
-            } catch (NullPointerException e) {
-                log.debug("doPost" +  e );
+            log.debug("doPost: " + action + ", id " + id);
+            switch (action) {
+                case "delete":
+                    userMealRepository.delete(new UserMeal(Integer.parseInt(request.getParameter("id")), null, null, 2000));
+                    break;
+                case "save":
+                    userMealRepository.save(new UserMeal(now(), "Вечер", 2000));
+                    break;
             }
+
+
+        } catch (NullPointerException e) {
+            log.debug("doPost " + e);
         }
 
 
@@ -95,7 +93,7 @@ public class MealServlet extends HttpServlet {
             endtime = "23:59";
         }
 
-        List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(sUserMeals, LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
+        List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(userMealRepository.getAll().stream().collect(Collectors.toList()), LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
 
         request.setAttribute("mealList", mealsWithExceeded);
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
