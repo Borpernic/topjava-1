@@ -40,7 +40,11 @@
                     <input type="submit" value="Фильтр">
                 </td>
             </tr>
-
+            <tr>
+                <td>
+                    <button type="submit" value="Добавить еду">Удалить</button>
+            </tr>
+            </td>
         </table>
     </form>
 </section>
@@ -79,7 +83,7 @@
                     <p>
                         <input value="delete" id="action" name="action" hidden/>
                         <input value=${userMeal.id} id=${userMeal.id} name="id" hidden/>
-                        <button type="submit" value="Удалить">Удалить</button>
+                        <button formaction="" type="submit" value="Удалить">Удалить</button>
                     </p>
 
                         <%--<form action="userMeals" method="post">
