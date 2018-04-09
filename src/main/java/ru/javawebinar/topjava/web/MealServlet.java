@@ -42,8 +42,8 @@ public class MealServlet extends HttpServlet {
         log.debug("doPost redirect to sUserMeals");
         String sarttime = request.getParameter("sarttime");
         String endtime = request.getParameter("endtime");
-        System.out.println("sarttime" + sarttime);
-        System.out.println("endtime" + endtime);
+        System.out.println("sarttime " + sarttime);
+        System.out.println("endtime " + endtime);
         if (null == sarttime) {
             sarttime = "00:00";
         }
@@ -84,8 +84,8 @@ public class MealServlet extends HttpServlet {
         log.debug("redirect to sUserMeals");
         String sarttime = request.getParameter("sarttime");
         String endtime = request.getParameter("endtime");
-        System.out.println("sarttime" + sarttime);
-        System.out.println("endtime" + endtime);
+        System.out.println("sarttime " + sarttime);
+        System.out.println("endtime " + endtime);
         if (null == sarttime) {
             sarttime = "00:00";
         }
