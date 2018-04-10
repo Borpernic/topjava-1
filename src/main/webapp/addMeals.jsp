@@ -7,35 +7,50 @@
 <head>
     <title>Add Meals</title>
 </head>
+
+
 <body>
-
+<h2>Add meal</h2>
 <section>
+    <c:set var="meal" value="${meal}"/>
+    <jsp:useBean type="ru.javawebinar.topjava.model.UserMeal" id="meal" beanName="meal"
+                 scope="page"></jsp:useBean>
     <form action="userMeals" name="addMeals" method="post">
-        <jsp:useBean id="userMeal" scope="page" beanName="userMeal"
-                     type="ru.javawebinar.topjava.model.MealWithExceed"/>
-        <table border="1">
-            <thead>
+        <table>
             <tr>
-                <th>Data</th>
-                <th>Discriptions</th>
-                <th>Calories</th>
-                <th>Exceed</th>
+                <td>
+                    <label for="id" id="id">Id</label>
+                </td>
+                <td>
+                    <label for="dateTime" id="dateTime">Date</label>
+                </td>
+                <td>
+                    <label for="Discriptions" id="Discriptions">Discriptions</label>
+                </td>
+                <td>
+                    <label for="Calories" id="Calories">Calories</label>
+                </td>
             </tr>
-            </thead>
-
-
-            <td><input type="datetime-local" value=${now()} id="mealDataTime" name="mealDataTime"/></td>
-            <td><input type="text" id="mealDescription" name="mealDescription"/></td>
-            <td><input type="number" id="calories" name="calories"/></td>
-            <td>
-                <p>
-                    <button type="submit" value="Сохранить">Удалить</button>
-                </p>
-            </td>
+            <tr>
+                <td>
+                    <input name="id" value="${meal.id}" />
+                </td>
+                <td>
+                    <input name="mealDateTime" type="datetime-local" value="${meal.dateTime}"/>
+                </td>
+                <td>
+                    <input name="mealDescription" type="text" value="${meal.description}"/>
+                </td>
+                <td>
+                    <input name="mealCalories" type="number" value="${meal.calories}"/>
+                </td>
+                <td>
+                    <input name="action" value="save"/>
+                </td>
             </tr>
-
-
         </table>
+        <button type="submit" value="save" name="addButton">Сохранить</button>
+        <button type="button" value="cancel" name="cancelButton">Отменить</button>
     </form>
 </section>
 

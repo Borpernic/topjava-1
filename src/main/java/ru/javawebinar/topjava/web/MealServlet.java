@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+
         userMealRepository = new InMemoryUserMealRepository();
         for (UserMeal meal : MealsUtil.sUserMeals) {
             userMealRepository.save(meal);
@@ -40,6 +43,9 @@ public class MealServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("doPost redirect to sUserMeals");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        UserMeal userMeal;
         String sarttime = request.getParameter("sarttime");
         String endtime = request.getParameter("endtime");
         System.out.println("sarttime " + sarttime);
@@ -56,15 +62,35 @@ public class MealServlet extends HttpServlet {
             String action = request.getParameter("action").toString();
 
             String idStr = request.getParameter("id");
-            long id = null == idStr ? 0 : Long.parseLong(request.getParameter("id"));
+            String mealDateTimeStr = request.getParameter("mealDateTime");
+            String mealDescriptionStr = request.getParameter("mealDescription");
+            String mealCaloriesStr = request.getParameter("mealCalories");
 
+
+            int id = null == idStr ? 0 : Integer.parseInt(request.getParameter("id"));
+            int mealCalories = null == mealCaloriesStr ? 0 : Integer.parseInt(request.getParameter("mealCalories"));
+            LocalDateTime mealDateTime = null == mealDateTimeStr ? LocalDateTime.now() : LocalDateTime.parse(request.getParameter("mealDateTime"));
+            String mealDescription = null == mealDescriptionStr ? "" : mealDescriptionStr;
             log.debug("doPost: " + action + ", id " + id);
             switch (action) {
+                case "addMeal":
+                    if (id == 0) {
+                        userMeal = new UserMeal(now(), "", 0);
+                    } else {
+                        userMeal = new UserMeal(id, mealDateTime, mealDescription, mealCalories);
+                    }
+                    request.setAttribute("meal", userMeal);
+                    request.getRequestDispatcher("/addMeals.jsp").forward(request, response);
+                    break;
                 case "delete":
                     userMealRepository.delete(new UserMeal(Integer.parseInt(request.getParameter("id")), null, null, 2000));
                     break;
                 case "save":
-                    userMealRepository.save(new UserMeal(now(), "Вечер", 2000));
+                    if (id == 0) {
+                        userMealRepository.save(new UserMeal(mealDateTime, mealDescription, mealCalories));
+                    } else {
+                        userMealRepository.save(new UserMeal(id, mealDateTime, mealDescription, mealCalories));
+                    }
                     break;
             }
 

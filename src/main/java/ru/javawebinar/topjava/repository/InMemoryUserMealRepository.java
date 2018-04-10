@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.UserMeal;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryUserMealRepository implements UserMealRepository {
     private AtomicInteger count = new AtomicInteger(0);
-    private Map<Long, UserMeal> mealsMap = new HashMap();
+    private Map<Integer, UserMeal> mealsMap = new HashMap();
 
 
     @Override
@@ -29,7 +28,7 @@ public class InMemoryUserMealRepository implements UserMealRepository {
     }
 
     @Override
-    public UserMeal get(final long id) {
+    public UserMeal get(final int id) {
         return mealsMap.get(id);
     }
 

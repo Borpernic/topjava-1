@@ -44,7 +44,7 @@ public static List<UserMeal> sUserMeals = Arrays.asList(
 
         return userMeals.stream()
                 .filter(userMeal -> TimeUtil.isBetween(userMeal.getTime(), startTime, endTime))
-                .map(userMeal -> createWithExceed(userMeal, caloriesSumByDate.get(userMeal.getDate()) > caloriesPerDay))
+                .map(userMeal -> createWithExceed(userMeal, caloriesSumByDate.get(userMeal.getDate()) > caloriesPerDay)).sorted(Comparator.comparing(MealWithExceed::getDateTime))
                 .collect(Collectors.toList());
     }
 

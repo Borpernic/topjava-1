@@ -10,13 +10,13 @@ public class UserMeal {
     private final String description;
 
     private final int calories;
-    private long id;
+    private int id;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public UserMeal(long id, LocalDateTime dateTime, String description, int calories) {
+    public UserMeal(int id, LocalDateTime dateTime, String description, int calories) {
         this.id = id;
         this.dateTime = dateTime;
         this.description = description;
@@ -52,7 +52,7 @@ public class UserMeal {
         return dateTime.toLocalTime();
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id=id;
     }
 }
