@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td>
-                    <input name="id" value="${meal.id}" />
+                    <input name="id" value="${meal.id}"/>
                 </td>
                 <td>
                     <input name="mealDateTime" type="datetime-local" value="${meal.dateTime}"/>
@@ -50,7 +50,10 @@
             </tr>
         </table>
         <button type="submit" value="save" name="addButton">Сохранить</button>
-        <button type="button" value="cancel" name="cancelButton">Отменить</button>
+
+    </form>
+    <form action="userMeals" name="cancelButton" method="post">
+        <button onclick=window.history.back()>Отмена</button>
     </form>
 </section>
 
