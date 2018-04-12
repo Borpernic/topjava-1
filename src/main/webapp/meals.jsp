@@ -20,6 +20,27 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <h2>Meals</h2>
+
+    <table border="0">
+        <form action="userMeals" name="filter">
+            <tr>
+                <td><label for="starttime"> Время начало:</label></td>
+
+                <td><label for="starttime">Время конец:</label></td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="starttime" type="time" name="sarttime" value="00:00">
+                </td>
+                <td>
+                    <input id="endtime" type="time" name="endtime" value="23:59">
+                </td>
+                <td>
+                    <input type="submit" value="Фильтр">
+                </td>
+            </tr>
+        </form>
+
     <a href="meals?action=create">Add Meal</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
