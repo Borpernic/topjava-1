@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -14,8 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static ru.javawebinar.topjava.util.MealsUtil.getFilteredWithExceeded;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
@@ -62,6 +68,23 @@ public class MealServlet extends HttpServlet {
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
+            case "filter":
+                log.debug("redirect to meals");
+                String sarttime = request.getParameter("sarttime");
+                String endtime = request.getParameter("endtime");
+                System.out.println("sarttime " + sarttime);
+                System.out.println("endtime " + endtime);
+                if (null == sarttime) {
+                    sarttime = "00:00";
+                }
+                if (null == endtime) {
+                    endtime = "23:59";
+                }
+                List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(userMealRepository.getAll().stream().collect(Collectors.toList()), LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
+                request.setAttribute("mealList", mealsWithExceeded);
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+
+                break;
             case "all":
             default:
                 log.info("getAll");
@@ -70,6 +93,8 @@ public class MealServlet extends HttpServlet {
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
+
+
     }
 
     private int getId(HttpServletRequest request) {

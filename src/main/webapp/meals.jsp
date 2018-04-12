@@ -22,7 +22,7 @@
     <h2>Meals</h2>
 
     <table border="0">
-        <form action="userMeals" name="filter">
+        <form action="meals" name="filter">
             <tr>
                 <td><label for="starttime"> Время начало:</label></td>
 
@@ -36,7 +36,8 @@
                     <input id="endtime" type="time" name="endtime" value="23:59">
                 </td>
                 <td>
-                    <input type="submit" value="Фильтр">
+                    <input value="filter" name="action" hidden/>
+                    <button type="submit" name="Фильтр">Фильтр</button>
                 </td>
             </tr>
         </form>
