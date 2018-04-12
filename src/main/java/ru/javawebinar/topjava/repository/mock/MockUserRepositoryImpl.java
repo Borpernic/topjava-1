@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository.mock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
@@ -10,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
+@Qualifier("mockUser")
+
 public class MockUserRepositoryImpl implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(MockUserRepositoryImpl.class);
 
