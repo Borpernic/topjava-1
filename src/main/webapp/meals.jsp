@@ -5,8 +5,45 @@
 <%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>--%>
 <html>
 <head>
-    <title>Meal list</title>
+
     <style>
+        div.container {
+            width: 100%;
+            border: 1px solid gray;
+        }
+
+        header, footer {
+            padding: 1em;
+            color: white;
+            background-color: black;
+            clear: left;
+            text-align: center;
+        }
+
+        nav {
+            float: left;
+            max-width: 160px;
+            margin: 0;
+            padding: 1em;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul a {
+            text-decoration: none;
+        }
+
+        article {
+            margin-left: 1px;
+            border-left: 1px solid gray;
+            border-right: 1px solid gray;
+            padding: 1em;
+            overflow: hidden;
+        }
+
         .normal {
             color: green;
         }
@@ -17,7 +54,11 @@
     </style>
 </head>
 <body>
-<section>
+
+<header>
+    <title>Meal list</title>
+
+
     <h3><a href="index.html">Home</a></h3>
     <h2>Meals</h2>
 
@@ -41,35 +82,49 @@
                 </td>
             </tr>
         </form>
-
-    <a href="meals?action=create">Add Meal</a>
-    <hr/>
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Calories</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <c:forEach items="${meals}" var="meal">
-            <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
-            <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                <td>
-                        <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
-                        <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
-                        <%--${fn:replace(meal.dateTime, 'T', ' ')}--%>
-                        ${fn:formatDateTime(meal.dateTime)}
-                </td>
-                <td>${meal.description}</td>
-                <td>${meal.calories}</td>
-                <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
-                <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
-            </tr>
-        </c:forEach>
     </table>
-</section>
+</header>
+<nav>
+    <form action="meals">
+        <select name="users" size="3">
+            <option value="user" selected>User</option>
+            <option value="admin">Admin</option>
+        </select>
+    </form>
+</nav>
+
+
+<article>
+    <section>
+        <a href="meals?action=create">Add Meal</a>
+        <hr/>
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Calories</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <c:forEach items="${meals}" var="meal">
+                <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
+                <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                    <td>
+                            <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
+                            <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
+                            <%--${fn:replace(meal.dateTime, 'T', ' ')}--%>
+                            ${fn:formatDateTime(meal.dateTime)}
+                    </td>
+                    <td>${meal.description}</td>
+                    <td>${meal.calories}</td>
+                    <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
+                    <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </section>
+</article>
 </body>
 </html>
