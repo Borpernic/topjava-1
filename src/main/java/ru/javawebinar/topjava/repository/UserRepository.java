@@ -17,4 +17,6 @@ public interface UserRepository {
     User getByEmail(String email);
 
     List<User> getAll();
+//false if wrong email/password
+    boolean checkUserLogin(String email, String password);
 }
