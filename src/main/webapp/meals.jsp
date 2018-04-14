@@ -86,10 +86,12 @@
 </header>
 <nav>
     <form action="meals">
-        <select name="users" size="3">
-            <option value="user" selected>User</option>
-            <option value="admin">Admin</option>
+        <select name="users" size="3" >
+            <option value="user" selected password="321">User</option>
+            <option value="admin" password="123">Admin</option>
         </select>
+
+        <input type="submit" name="password" value="321">  </input>
     </form>
 </nav>
 

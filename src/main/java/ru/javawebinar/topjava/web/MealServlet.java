@@ -37,11 +37,11 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String id = request.getParameter("id");
+        /*String id = request.getParameter("id");
         String login = request.getParameter("email").toString();
         String password = request.getParameter("password").toString();
         if (!(login.isEmpty() || password.isEmpty())) {
-            if ()
+
 
             Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                     LocalDateTime.parse(request.getParameter("dateTime")),
@@ -97,7 +97,7 @@ public class MealServlet extends HttpServlet {
                         MealsUtil.getWithExceeded(repository.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
-        }
+        }*/
 
 
     }
