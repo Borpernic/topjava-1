@@ -6,14 +6,14 @@ import ru.javawebinar.topjava.model.User;
 import java.util.Collection;
 
 public interface MealRepository {
-    Meal save(Meal meal, User user);
+    Meal save(Meal meal, int userId);
 
     // false if not found
-    boolean delete(int id, User user);
+    boolean delete(int id, int userId);
 
     // null if not found
-    Meal get(int id, User user);
+    Meal get(int id, int userId);
 
     // null if not found
-    Collection<Meal> getAll(User user);
+    Collection<Meal> getAll(int userId);
 }

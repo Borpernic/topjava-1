@@ -7,12 +7,14 @@ import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,19 +29,24 @@ public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
     private MealRepository repository;
+    private MealRestController mealRestController;
+
 
     @Override
+
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         repository = new InMemoryMealRepositoryImpl();
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        /*String id = request.getParameter("id");
+        String id = request.getParameter("id");
         String login = request.getParameter("email").toString();
         String password = request.getParameter("password").toString();
+
         if (!(login.isEmpty() || password.isEmpty())) {
 
 
@@ -59,6 +66,12 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action == null ? "all" : action) {
+            case "login":
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                HttpSession session = request.getSession(true);
+                session.setAttribute("email", email);
+                break;
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
@@ -97,7 +110,7 @@ public class MealServlet extends HttpServlet {
                         MealsUtil.getWithExceeded(repository.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
-        }*/
+        }
 
 
     }

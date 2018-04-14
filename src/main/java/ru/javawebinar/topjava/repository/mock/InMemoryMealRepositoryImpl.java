@@ -21,21 +21,21 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(meal -> this.save(meal, meal.getUser()));
+        MealsUtil.MEALS.forEach(meal -> this.save(meal, meal.getUserId()));
     }
 
     @Override
-    public Meal save(Meal meal, User user) {
+    public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
-            meal.setId(counter.incrementAndGet(), user);
+            meal.setId(counter.incrementAndGet(), userId);
         }
         repository.put(meal.getId(), meal);
         return meal;
     }
 
     @Override
-    public boolean delete(int id, User user) {
-        if (checkMealByUser(id, user)) {
+    public boolean delete(int id, int userId) {
+        if (checkMealByUser(id, userId)) {
             repository.remove(id);
             return true;
         }
@@ -43,13 +43,13 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         return false;
     }
 
-    private boolean checkMealByUser(int id, User user) {
-        return repository.get(id).getUser().getId() == user.getId();
+    private boolean checkMealByUser(int id, int userId) {
+        return repository.get(id).getUserId() == userId;
     }
 
     @Override
-    public Meal get(int id, User user) {
-        if (checkMealByUser(id, user)) {
+    public Meal get(int id, int userId) {
+        if (checkMealByUser(id, userId)) {
             return repository.get(id);
         }
 
@@ -57,8 +57,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public Collection<Meal> getAll(User user) {
-        Collection<Meal> collect = repository.values().stream().filter(meal -> meal.getUser().getId() == user.getId()).collect(Collectors.toCollection(ArrayList::new));
+    public Collection<Meal> getAll(int userId) {
+        Collection<Meal> collect = repository.values().stream().filter(meal -> meal.getUserId() == userId).collect(Collectors.toCollection(ArrayList::new));
         return collect;
     }
 }
