@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,9 @@ public class MockUserRepositoryImpl implements UserRepository {
     private Map<Integer, User> userRepository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-
-    /*   {
+    {
            MealsUtil.USERS.forEach(this::save);
        }
-   */
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);

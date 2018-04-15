@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,10 +21,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private static final Logger log = getLogger(InMemoryMealRepositoryImpl.class);
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
-/*
     {
         MealsUtil.MEALS.forEach(meal -> this.save(meal, meal.getUserId()));
-    }*/
+    }
 
     @Override
     public Meal save(Meal meal, int userId) {
