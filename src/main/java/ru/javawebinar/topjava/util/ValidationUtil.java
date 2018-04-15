@@ -39,4 +39,13 @@ public class ValidationUtil {
             throw new IllegalArgumentException(entity + " must be with id=" + id);
         }
     }
+
+    public static void assureIdConsistent(AbstractBaseEntity entity, int userMealId, int id) {
+//      http://stackoverflow.com/a/32728226/548473
+        if (entity.isNew()) {
+            entity.setId(id);
+        } else if (userMealId != id) {
+            throw new IllegalArgumentException(entity + " must be with userId=" + id);
+        }
+    }
 }

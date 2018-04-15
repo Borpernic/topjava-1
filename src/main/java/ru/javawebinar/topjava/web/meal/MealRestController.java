@@ -30,7 +30,7 @@ public class MealRestController {
         log.info("get {}", id);
         return service.get(AuthorizedUser.id(), id);
     }
-dfgdgd
+
     public Meal create(Meal meal) {
         log.info("create {}", AuthorizedUser.id());
         checkNew(meal);
@@ -42,10 +42,10 @@ dfgdgd
         log.info("delete {}", id);
         service.delete(AuthorizedUser.id(), id);
     }
-dgdfgdfg
+
     public void update(Meal meal) {
         log.info("update {} with id={}", meal, AuthorizedUser.id());
-        assureIdConsistent(meal, AuthorizedUser.id());
+        assureIdConsistent(meal, meal.getUserId(), AuthorizedUser.id());
         service.update(AuthorizedUser.id(), meal);
     }
 

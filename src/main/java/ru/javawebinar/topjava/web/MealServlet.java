@@ -31,9 +31,8 @@ public class MealServlet extends HttpServlet {
     private MealRepository repository;
     private MealRestController mealRestController;
 
-
+/*
     @Override
-
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         repository = new InMemoryMealRepositoryImpl();
@@ -118,5 +117,5 @@ public class MealServlet extends HttpServlet {
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.valueOf(paramId);
-    }
+    }*/
 }
