@@ -34,6 +34,10 @@ public class MockUserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         log.info("save {}", user);
+
+        if (user.isNew()) {
+            user.setId(counter.incrementAndGet());
+        }
         userRepository.put(user.getId(), user);
         return user;
     }
