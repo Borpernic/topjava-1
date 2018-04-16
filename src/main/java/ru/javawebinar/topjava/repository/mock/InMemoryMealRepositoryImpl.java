@@ -32,6 +32,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet(), userId);
         }
+        log.info("save userID {} meal {}", userId, meal);
+
         repository.put(meal.getId(), meal);
         return meal;
     }
@@ -39,6 +41,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public boolean delete(int id, int userId) {
         if (checkMealByUser(id, userId)) {
+            log.info("delete {}", id);
             repository.remove(id);
             return true;
         }
@@ -47,11 +50,13 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     private boolean checkMealByUser(int id, int userId) {
+        log.info("checkMealByUser {}", id);
         return repository.get(id).getUserId() == userId;
     }
 
     @Override
     public Meal get(int id, int userId) {
+        log.info("get id{} userId{}", id, userId);
         if (checkMealByUser(id, userId)) {
             return repository.get(id);
         }
@@ -61,6 +66,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Collection<Meal> getAll(int userId) {
+        log.info("getAll userId {}", userId);
         Collection<Meal> collect = repository.values().stream().filter(meal -> meal.getUserId() == userId).collect(Collectors.toCollection(ArrayList::new));
         return collect;
     }
