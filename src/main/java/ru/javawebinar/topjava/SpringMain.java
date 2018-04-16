@@ -3,14 +3,9 @@ package ru.javawebinar.topjava;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.meal.MealRestController;
-import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 public class SpringMain {
     public static void main(String[] args) {
@@ -45,8 +40,16 @@ public class SpringMain {
 
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             System.out.println(mealRestController.getAll());
-            mealRestController.create(new Meal(1, LocalDateTime.now(), "еда", 500));
-            mealRestController.create(new Meal(2, LocalDateTime.now(), "обед", 500));
+            mealRestController.create(
+                    new Meal(AuthorizedUser.id(), LocalDateTime.now(), "еда1 user1", 500));
+            mealRestController.create(
+                    new Meal(AuthorizedUser.id(), LocalDateTime.now(), "еда2 user1", 500));
+            mealRestController.getAll().stream().forEach(meal -> {
+                Meal meal1Updated = new Meal(meal.getId(), meal.getUserId(), meal.getDateTime(),
+                        meal.getDescription() + meal.getUserId(), meal.getCalories());
+                mealRestController.update(meal1Updated);
+            });
+
             System.out.println(mealRestController.getAll());
         }
     }

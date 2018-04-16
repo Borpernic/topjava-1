@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MealService {
 
-    Meal create(int userId);
+    Meal create(Meal meal, int userId);
 
     Meal get(int userId, int mealId) throws NotFoundException;
 

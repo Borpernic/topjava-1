@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.MealService;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class MealRestController {
     public Meal create(Meal meal) {
         log.info("create {}", AuthorizedUser.id());
         checkNew(meal);
-        return service.create(AuthorizedUser.id());
+        return service.create(meal, AuthorizedUser.id());
 
     }
 

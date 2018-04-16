@@ -6,9 +6,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -17,8 +15,8 @@ public class MealServiceImpl implements MealService {
     private MealRepository repository;
 
     @Override
-    public Meal create(final int userId) {
-        return repository.save(new Meal(userId, LocalDateTime.now(), "", 0), userId);
+    public Meal create(Meal meal, final int userId) {
+        return repository.save(meal, userId);
 
     }
 
