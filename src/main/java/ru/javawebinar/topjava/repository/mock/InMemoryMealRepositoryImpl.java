@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,10 +22,16 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private static final Logger log = getLogger(InMemoryMealRepositoryImpl.class);
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
+
     {
         MealsUtil.MEALS.forEach(meal -> {
             this.save(meal, meal.getUserId());
         });
+    }
+
+    public InMemoryMealRepositoryImpl() {
+
+        counter.set(repository.size());
     }
 
     @Override
@@ -49,6 +56,19 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         return false;
     }
 
+    @Override
+    public boolean deleteAll(int userId) {
+
+        log.info("delete all by userId {}", userId);
+        ArrayList<Meal> mealsByUser = repository.values()
+                .stream().filter(meal -> meal.getUserId() == userId)
+                .collect(Collectors.toCollection(ArrayList::new));
+        mealsByUser.forEach(meal -> this.delete(meal.getId(), userId));
+
+
+        return true;
+    }
+
     private boolean checkMealByUser(int id, int userId) {
         log.info("checkMealByUser {}", id);
         return repository.get(id).getUserId() == userId;
@@ -65,9 +85,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public Collection<Meal> getAll(int userId) {
+    public List<Meal> getAll(int userId) {
         log.info("getAll userId {}", userId);
-        Collection<Meal> collect = repository.values().stream().filter(meal -> meal.getUserId() == userId).collect(Collectors.toCollection(ArrayList::new));
+        List<Meal> collect = repository.values().stream().filter(meal -> meal.getUserId() == userId).collect(Collectors.toCollection(ArrayList::new));
         return collect;
     }
 }

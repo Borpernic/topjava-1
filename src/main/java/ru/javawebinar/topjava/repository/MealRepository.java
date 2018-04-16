@@ -2,7 +2,9 @@ package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Meal;
 
+
 import java.util.Collection;
+import java.util.List;
 
 public interface MealRepository {
 
@@ -11,9 +13,12 @@ public interface MealRepository {
     // false if not found
     boolean delete(int id, int userId);
 
+    // false if not found
+    boolean deleteAll(int userId);
+
     // null if not found
     Meal get(int id, int userId);
 
     // null if not found
-    Collection<Meal> getAll(int userId);
+    List<Meal> getAll(int userId);
 }

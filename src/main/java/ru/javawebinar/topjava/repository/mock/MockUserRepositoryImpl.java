@@ -21,22 +21,31 @@ public class MockUserRepositoryImpl implements UserRepository {
     private Map<Integer, User> userRepository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
+    public MockUserRepositoryImpl() {
+        counter.set(userRepository.size());
+        log.info("constructor counter {}", counter);
+    }
+
     {
-           MealsUtil.USERS.forEach(this::save);
-       }
+        log.info("init MockUserRepositoryImpl {}", counter);
+        MealsUtil.USERS.forEach(this::save);
+        log.info("after init MockUserRepositoryImpl counter {}", counter);
+    }
+
     @Override
     public boolean delete(int id) {
-        log.info("delete {}", id);
+        log.info("delete {} counter {}", id, counter);
 
         return userRepository.remove(id) != null;
     }
 
     @Override
     public User save(User user) {
-        log.info("save {}", user);
-
+        log.info("save {} counter {}", user, counter);
+    //    counter.set(userRepository.size());
         if (user.isNew()) {
             user.setId(counter.incrementAndGet());
+            log.info("after save {} counter {}", user, counter);
         }
         userRepository.put(user.getId(), user);
         return user;
