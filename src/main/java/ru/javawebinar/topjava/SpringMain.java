@@ -39,18 +39,19 @@ public class SpringMain {
 
 
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
-            System.out.println(mealRestController.getAll());
+            System.out.println("перед добавлением " + mealRestController.getAll());
             mealRestController.create(
                     new Meal(AuthorizedUser.id(), LocalDateTime.now(), "еда1 user1", 500));
             mealRestController.create(
                     new Meal(AuthorizedUser.id(), LocalDateTime.now(), "еда2 user1", 500));
+            System.out.println("после добавления " + mealRestController.getAll());
             mealRestController.getAll().stream().forEach(meal -> {
                 Meal meal1Updated = new Meal(meal.getId(), meal.getUserId(), meal.getDateTime(),
                         meal.getDescription() + meal.getUserId(), meal.getCalories());
                 mealRestController.update(meal1Updated);
             });
 
-            System.out.println(mealRestController.getAll());
-        }
+            System.out.println("после обновления " + mealRestController.getAll());
+}
     }
 }
