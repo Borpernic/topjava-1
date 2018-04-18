@@ -52,14 +52,6 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        switch (action == null ? "all" : action) {
-            case "login":
-                break;
-            case "save":
-
-                break;
-
-        }
         String id = request.getParameter("id");
         String login = request.getParameter("email").toString();
         String password = request.getParameter("password").toString();
