@@ -14,15 +14,15 @@
 
         header, footer {
             padding: 1em;
-            color: white;
-            background-color: black;
+            color: goldenrod;
+            background-color: bisque;
             clear: left;
             text-align: center;
         }
 
         nav {
             float: left;
-            max-width: 160px;
+            max-width: 30%;
             margin: 0;
             padding: 1em;
         }
@@ -30,10 +30,12 @@
         nav ul {
             list-style-type: none;
             padding: 0;
+
         }
 
         nav ul a {
             text-decoration: none;
+
         }
 
         article {
@@ -44,6 +46,11 @@
             overflow: hidden;
         }
 
+        table {
+
+            width: 80%
+        }
+
         .normal {
             color: green;
         }
@@ -51,6 +58,8 @@
         .exceeded {
             color: red;
         }
+
+
     </style>
 </head>
 <body>
@@ -62,29 +71,28 @@
     <h3><a href="index.html">Home</a></h3>
     <h2>Meals</h2>
 
-    <table border="0">
-        <form action="meals" name="filter">
-            <tr>
-                <td><label for="starttime"> Время начало:</label></td>
 
-                <td><label for="starttime">Время конец:</label></td>
-            </tr>
-            <tr>
-                <td>
-                    <input id="starttime" type="time" name="sarttime" value="00:00">
-                </td>
-                <td>
-                    <input id="endtime" type="time" name="endtime" value="23:59">
-                </td>
-                <td>
-                    <input value="filter" name="action" hidden/>
-                    <button type="submit" name="Фильтр">Фильтр</button>
-                </td>
-            </tr>
-        </form>
-    </table>
+    <form action="meals" name="filter">
+        <ul>
+            <label for="starttime" > Время начало:</label>
+
+            <label for="starttime">Время конец:</label>
+        </ul>
+        <ul>
+
+            <input id="starttime" type="time" name="sarttime" value="00:00">
+
+            <input id="endtime" type="time" name="endtime" value="23:59">
+
+            <input value="filter" name="action" hidden/>
+            <button type="submit" name="Фильтр">Фильтр</button>
+
+        </ul>
+    </form>
+
 </header>
-<<nav>
+<
+<nav>
     <form action="meals">
         <select id="users" name="users" size="1" onchange="passwordbyUser()">
             <option value="user" selected userPassword="321">User</option>
@@ -104,7 +112,6 @@
     </form>
 
 </nav>
-
 
 <article>
     <section>
