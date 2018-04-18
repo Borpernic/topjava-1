@@ -42,7 +42,7 @@
         <dl>
             <dt>Calories:</dt>
             <dd><input type="number" value="${meal.calories}" name="calories"></dd>
-            <dd><input type="text" value="update" name="action" hidden></dd>
+            <dd><input type="text" value="save" name="action" hidden></dd>
         </dl>
         <button type="submit">Save</button>
         <button onclick="window.history.back()" type="button">Cancel</button>

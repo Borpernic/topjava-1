@@ -51,6 +51,15 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        switch (action == null ? "all" : action) {
+            case "login":
+                break;
+            case "save":
+
+                break;
+
+        }
         String id = request.getParameter("id");
         String login = request.getParameter("email").toString();
         String password = request.getParameter("password").toString();
@@ -85,6 +94,8 @@ public class MealServlet extends HttpServlet {
                 mealRestController.delete(id);
                 response.sendRedirect("meals");
                 break;
+
+
             case "create":
             case "update":
                 final Meal meal = "create".equals(action) ?
@@ -107,11 +118,18 @@ public class MealServlet extends HttpServlet {
                 if (null == endtime) {
                     endtime = "23:59";
                 }
-                List<MealWithExceed> mealsWithExceeded = getFilteredWithExceeded(mealRestController.getAll().stream().collect(Collectors.toList()), LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
-                request.setAttribute("mealList", mealsWithExceeded);
+                List<MealWithExceed> mealsWithExceeded = MealsUtil.getFilteredWithExceeded(mealRestController.getAll().stream().collect(Collectors.toList()), LocalTime.parse(sarttime), LocalTime.parse(endtime), 2000);
+                request.setAttribute("meals", mealsWithExceeded);
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
 
                 break;
+            case "save":
+                String dateTime = request.getParameter("dateTime").toString();
+                LocalDateTime mealDateTime = LocalDateTime.parse(dateTime);
+                String description = request.getParameter("description").toString();
+                int calories = Integer.parseInt(request.getParameter("calories").toString());
+                mealRestController.update(new Meal(getId(request), AuthorizedUser.id(), mealDateTime, description, calories));
+
             case "all":
             default:
                 log.info("getAll");
