@@ -120,7 +120,10 @@ public class MealServlet extends HttpServlet {
                 LocalDateTime mealDateTime = LocalDateTime.parse(dateTime);
                 String description = request.getParameter("description").toString();
                 int calories = Integer.parseInt(request.getParameter("calories").toString());
-                mealRestController.update(new Meal(getId(request), AuthorizedUser.id(), mealDateTime, description, calories));
+                String id1 = request.getParameter("id").toString();
+                id = id1.isEmpty() ? 0 : Integer.parseInt(id1);
+                final Meal mealSave = new Meal(id, AuthorizedUser.id(), mealDateTime, description, calories);
+                mealRestController.update(mealSave);
 
             case "all":
             default:
