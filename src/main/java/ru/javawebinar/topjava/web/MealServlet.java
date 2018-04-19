@@ -79,6 +79,10 @@ public class MealServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 HttpSession session = request.getSession(true);
                 session.setAttribute("email", email);
+
+                request.setAttribute("meals",
+                        MealsUtil.getWithExceeded(mealRestController.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "delete":
                 int id = getId(request);
@@ -130,6 +134,7 @@ public class MealServlet extends HttpServlet {
                 log.info("getAll");
                 request.setAttribute("meals",
                         MealsUtil.getWithExceeded(mealRestController.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                request.setAttribute("user", null);
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }

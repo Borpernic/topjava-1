@@ -74,7 +74,7 @@
 
     <form action="meals" name="filter">
         <ul>
-            <label for="starttime" > Время начало:</label>
+            <label for="starttime"> Время начало:</label>
 
             <label for="starttime">Время конец:</label>
         </ul>
@@ -93,19 +93,27 @@
 </header>
 <
 <nav>
+
+    <c:if test="${user}!=null">
+        <jsp:useBean id="user" scope="session" type="ru.javawebinar.topjava.model.User"/>
+        <c:set var="user" value="Вы вошли как ${user.name}, ${user.roles}"/>
+        <span>"Вы вошли как ${user.name}, ${user.roles}"</span>
+    </c:if>
+    <c:if test="${user}==null">
+        <c:set var="user" value="Вы вошли как незарегистрированный пользователь"/>
+        <c:out value="user"/>
+        <p>bn</p>
+    </c:if>
     <form action="meals">
-        <select id="users" name="users" size="1" onchange="passwordbyUser()">
-            <option value="user" selected userPassword="321">User</option>
-            <option value="admin" userPassword="123">Admin</option>
-        </select> = <span id="output">0</span>
+
 
         <hr/>
         <label id="emailLabel" for="email">Email</label>
-        <input type="text" id="email" name="email" value="User@gmail.com" size="20">  </input>
+        <input type="text" id="email" name="email" value="User@gmail.com" size="20"> </input>
         <p></p>
         <label id="passwordLabel" for="password">Password</label>
         <input type="text" id="password" name="password" value="passwordbyUser()" size="20">123</input>
-        <input type="text" id="action" name="action" value="login()" hidden></input>
+        <input type="text" id="action" name="action" value="login" hidden></input>
         <hr/>
         <button type="submit">Вход</button>
         <button type="button" onclick="window.history.back()">Отмена</button>
