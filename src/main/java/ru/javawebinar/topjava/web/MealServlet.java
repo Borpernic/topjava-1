@@ -79,6 +79,7 @@ public class MealServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 HttpSession session = request.getSession(true);
                 session.setAttribute("email", email);
+                session.setAttribute("logged", email);
 
                 request.setAttribute("meals",
                         MealsUtil.getWithExceeded(mealRestController.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
