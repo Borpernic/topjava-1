@@ -25,7 +25,7 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         mealController = appCtx.getBean(MealRestController.class);
 
     }
@@ -47,7 +47,7 @@ public class MealServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("calories")));
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        mealController.update (meal,meal.getId());
+        mealController.update(meal, meal.getId());
         response.sendRedirect("meals");
     }
 
