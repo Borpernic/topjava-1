@@ -17,8 +17,8 @@ import static java.util.stream.Collectors.toList;
 
 public class MealsUtil {
 
-    public static int ADMIN_ID = 100000;
-    public static int USER_ID = 100001;
+    public static int ADMIN_ID = 100001;
+    public static int USER_ID = 100000;
     public static final List<Meal> MEALS = Arrays.asList(
             new Meal(ADMIN_ID, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
             new Meal(ADMIN_ID, LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
