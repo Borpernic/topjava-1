@@ -25,9 +25,10 @@
             <dd><input type="time" name="startTime" value="${param.startTime}"></dd>
         </dl>
         <dl>
-            <dt>To Time:</dt>
-            <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
-        </dl>
+        <dt>To Time:</dt>
+        <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
+    </dl>
+        <input type="text" name="action" value="filter" hidden>
         <button type="submit">Filter</button>
     </form>
     <hr/>

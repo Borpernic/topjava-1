@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -63,6 +66,7 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        request.setCharacterEncoding("UTF-8");
 
         switch (action == null ? "all" : action) {
             case "delete":
@@ -81,7 +85,14 @@ public class MealServlet extends HttpServlet {
                 break;
             case "filter":
 
+                LocalDateTime startDateTime = dateTime(request, "startFilter");
+                LocalDateTime endDateTime = dateTime(request, "startFilter");
+                log.info("filter startDateTime{}, endDateTime {}", startDateTime, endDateTime);
 
+
+                request.setAttribute("meals",
+                        mealController.getAll());
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "all":
             default:
@@ -96,5 +107,30 @@ public class MealServlet extends HttpServlet {
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
+    }
+
+    private LocalDateTime dateTime(HttpServletRequest request, String typeFilterDateTime) {
+        switch (typeFilterDateTime) {
+            case "startFilter":
+                LocalDate startDate = ("startDate").isEmpty() ? DateTimeUtil.MIN_DATE
+                        : LocalDate.parse(request.getParameter("startDate"));
+                LocalTime startTime = "startTime".isEmpty() ? LocalTime.of(0, 0)
+                        : LocalTime.parse(request.getParameter("startTime"));
+                return LocalDateTime.of(startDate, startTime);
+
+
+            case "endFilter":
+
+                LocalDate endDate = ("endDate").isEmpty() ? DateTimeUtil.MAX_DATE
+                        : LocalDate.parse(request.getParameter("endDate"));
+                LocalTime endTime = "endTime".isEmpty() ? LocalTime.of(23, 59)
+                        : LocalTime.parse(request.getParameter("endTime"));
+
+                return LocalDateTime.of(endDate, endTime);
+
+
+        }
+
+        return LocalDateTime.of(0, 0, 0, 0, 0);
     }
 }
