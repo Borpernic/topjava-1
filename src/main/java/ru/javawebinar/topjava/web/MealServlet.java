@@ -20,6 +20,10 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDateTimeForStartFilter;
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
+
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
     private ConfigurableApplicationContext appCtx;
@@ -85,13 +89,18 @@ public class MealServlet extends HttpServlet {
                 break;
             case "filter":
 
-                LocalDateTime startDateTime = dateTime(request, "startFilter");
-                LocalDateTime endDateTime = dateTime(request, "startFilter");
-                log.info("filter startDateTime{}, endDateTime {}", startDateTime, endDateTime);
+
+                LocalDateTime startDateTime = parseLocalDateTimeForStartFilter(request.getParameter("startDate"),
+                        request.getParameter("startTime"));
+                LocalDateTime endDateTime = parseLocalDateTimeForStartFilter(request.getParameter("endDate"),
+                        request.getParameter("endTime"));
+
+                log.info("filter startDateTime {}, endDateTime {}",
+                        startDateTime, endDateTime);
 
 
                 request.setAttribute("meals",
-                        mealController.getAll());
+                        mealController.getBetween(startDateTime, endDateTime));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "all":
@@ -109,28 +118,4 @@ public class MealServlet extends HttpServlet {
         return Integer.parseInt(paramId);
     }
 
-    private LocalDateTime dateTime(HttpServletRequest request, String typeFilterDateTime) {
-        switch (typeFilterDateTime) {
-            case "startFilter":
-                LocalDate startDate = ("startDate").isEmpty() ? DateTimeUtil.MIN_DATE
-                        : LocalDate.parse(request.getParameter("startDate"));
-                LocalTime startTime = "startTime".isEmpty() ? LocalTime.of(0, 0)
-                        : LocalTime.parse(request.getParameter("startTime"));
-                return LocalDateTime.of(startDate, startTime);
-
-
-            case "endFilter":
-
-                LocalDate endDate = ("endDate").isEmpty() ? DateTimeUtil.MAX_DATE
-                        : LocalDate.parse(request.getParameter("endDate"));
-                LocalTime endTime = "endTime".isEmpty() ? LocalTime.of(23, 59)
-                        : LocalTime.parse(request.getParameter("endTime"));
-
-                return LocalDateTime.of(endDate, endTime);
-
-
-        }
-
-        return LocalDateTime.of(0, 0, 0, 0, 0);
-    }
 }

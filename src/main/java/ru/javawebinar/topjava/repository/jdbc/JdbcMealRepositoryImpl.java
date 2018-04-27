@@ -29,7 +29,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     public JdbcMealRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 
         this.insertMeal = new SimpleJdbcInsert(dataSource)
-                        .withTableName("user_meals")
+                .withTableName("user_meals")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
@@ -42,7 +42,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
 
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
-                .addValue("user_id",userId)
+                .addValue("user_id", userId)
                 .addValue("dateTime", meal.getDateTime())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories());
@@ -66,13 +66,13 @@ public class JdbcMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        List<Meal> meals = jdbcTemplate.query("SELECT * FROM user_meals WHERE id=? and user_id =?", ROW_MAPPER, id, userId);
+        List<Meal> meals = jdbcTemplate.query("SELECT * FROM user_meals WHERE id=? AND user_id =?", ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return jdbcTemplate.query("SELECT * FROM user_meals WHERE user_id=?", ROW_MAPPER, userId);
+        return jdbcTemplate.query("SELECT * FROM user_meals WHERE user_id=? ORDER BY datetime DESC", ROW_MAPPER, userId);
 
     }
 
@@ -80,6 +80,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
 
 
-        return null;
+        return jdbcTemplate.query("SELECT * FROM user_meals WHERE user_id=? AND datetime BETWEEN ? AND ?",
+                ROW_MAPPER, userId, startDate, endDate);
     }
 }

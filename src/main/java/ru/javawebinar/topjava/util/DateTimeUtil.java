@@ -21,11 +21,23 @@ public class DateTimeUtil {
         return ldt == null ? "" : ldt.format(DATE_TIME_FORMATTER);
     }
 
-    public static LocalDate parseLocalDate(String str) {
-        return StringUtils.isEmpty(str) ? null : LocalDate.parse(str);
+    public static LocalDate parseLocalDate(String localDateStr) {
+        return StringUtils.isEmpty(localDateStr) ? null : LocalDate.parse(localDateStr);
     }
 
-    public static LocalTime parseLocalTime(String str) {
-        return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
+    public static LocalTime parseLocalTime(String localTimeStr) {
+        return StringUtils.isEmpty(localTimeStr) ? null : LocalTime.parse(localTimeStr);
+    }
+
+    public static LocalDateTime parseLocalDateTimeForStartFilter(String localDateStr, String localTimeStr) {
+
+        return LocalDateTime.of(parseLocalDate(localDateStr) != null ? parseLocalDate(localDateStr) : DateTimeUtil.MIN_DATE,
+                parseLocalTime(localTimeStr) != null ? parseLocalTime(localTimeStr) : LocalTime.MIN);
+    }
+
+    public static LocalDateTime parseLocalDateTimeForEndFilter(String localDateStr, String localTimeStr) {
+
+        return LocalDateTime.of(parseLocalDate(localDateStr) != null ? parseLocalDate(localDateStr) : DateTimeUtil.MAX_DATE,
+                parseLocalTime(localTimeStr) != null ? parseLocalTime(localTimeStr) : LocalTime.MAX);
     }
 }
