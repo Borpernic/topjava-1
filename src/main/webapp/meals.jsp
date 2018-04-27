@@ -11,7 +11,7 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <h2>Meals</h2>
-    <form method="post" action="meals?action=filter">
+    <form method="get" action="meals?action=filter">
         <dl>
             <dt>From Date:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
