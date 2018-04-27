@@ -28,7 +28,10 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     @Autowired
     public JdbcMealRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 
-        this.insertMeal = new SimpleJdbcInsert(dataSource);
+        this.insertMeal = new SimpleJdbcInsert(dataSource)
+                        .withTableName("user_meals")
+                .usingGeneratedKeyColumns("id");
+
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 
