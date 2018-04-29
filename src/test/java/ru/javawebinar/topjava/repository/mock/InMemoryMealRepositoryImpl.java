@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.UserTestData;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -20,8 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ru.javawebinar.topjava.web.UserTestData.ADMIN_ID;
-import static ru.javawebinar.topjava.web.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.web.UserTestData.*;
 
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
@@ -90,5 +90,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 Stream.empty() :
                 userMeals.values().stream()
                         .sorted(Comparator.comparing(Meal::getDateTime).reversed());
+    }
+
+    public void init() {
+
+        repository.clear();
+        repository.put(UserTestData.USER_ID, USER);
+        repository.put(UserTestData.ADMIN_ID, ADMIN);
     }
 }
