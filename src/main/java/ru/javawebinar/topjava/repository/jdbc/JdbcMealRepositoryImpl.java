@@ -79,7 +79,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
 
-        String sql = "SELECT * FROM (SELECT * FROM user_meals WHERE datetime BETWEEN ? AND ? ) AS filterDate \n" +
+        String sql = "SELECT * FROM (SELECT * FROM user_meals WHERE user_id=? AND datetime BETWEEN ? AND ? ) AS filterDate " +
                 "WHERE datetime::TIME BETWEEN ? AND ? ORDER BY datetime DESC";
         return jdbcTemplate.query(sql, ROW_MAPPER, userId, startDate.toLocalDate(), endDate.toLocalDate(), startDate.toLocalTime(), endDate.toLocalTime());
     }

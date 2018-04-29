@@ -32,12 +32,12 @@ public class DateTimeUtil {
     public static LocalDateTime parseLocalDateTimeForStartFilter(String localDateStr, String localTimeStr) {
 
         return LocalDateTime.of(parseLocalDate(localDateStr) != null ? parseLocalDate(localDateStr) : DateTimeUtil.MIN_DATE,
-                parseLocalTime(localTimeStr) != null ? parseLocalTime(localTimeStr) : LocalTime.MIN);
+                parseLocalTime(localTimeStr) != null ? parseLocalTime(localTimeStr) : parseLocalTime("00:00:01"));
     }
 
     public static LocalDateTime parseLocalDateTimeForEndFilter(String localDateStr, String localTimeStr) {
 
         return LocalDateTime.of(parseLocalDate(localDateStr) != null ? parseLocalDate(localDateStr) : DateTimeUtil.MAX_DATE,
-                parseLocalTime(localTimeStr) != null ? parseLocalTime(localTimeStr) : LocalTime.MAX);
+                parseLocalTime(localTimeStr) != null ? parseLocalTime(localTimeStr) : parseLocalTime("23:59:59"));
     }
 }
