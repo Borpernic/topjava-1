@@ -31,11 +31,18 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-    {
-        MealsUtil.MEALS.forEach(meal -> save(meal, USER_ID));
+    public void init() {
+        repository.clear();
 
-        save(new Meal(ADMIN_ID,LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(ADMIN_ID,LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+        //MealsUtil.MEALS.forEach(meal -> save(meal, USER_ID));
+        save(new Meal(ADMIN_ID, LocalDateTime.of(2015, Month.JUNE, 1, 9, 0), "Админ завтрак", 500), ADMIN_ID);
+        save(new Meal(ADMIN_ID, LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
+        save(new Meal(ADMIN_ID, LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+
+        save(new Meal(USER_ID, LocalDateTime.of(2015, Month.JUNE, 1, 9, 0), "User завтрак", 500), USER_ID);
+        save(new Meal(USER_ID, LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "User ланч", 510), USER_ID);
+        save(new Meal(USER_ID, LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "User ужин", 1500), USER_ID);
+
     }
 
 
@@ -92,10 +99,5 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                         .sorted(Comparator.comparing(Meal::getDateTime).reversed());
     }
 
-    public void init() {
 
-        repository.clear();
-        repository.put(UserTestData.USER_ID, USER);
-        repository.put(UserTestData.ADMIN_ID, ADMIN);
-    }
 }
