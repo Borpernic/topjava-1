@@ -1,10 +1,13 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+@Entity
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}, name = "meals_pkey"),
+        @UniqueConstraint(columnNames = {"user_id"}, name = "meals_user_id_fkey")})
 
 public class Meal extends AbstractBaseEntity {
     private LocalDateTime dateTime;
