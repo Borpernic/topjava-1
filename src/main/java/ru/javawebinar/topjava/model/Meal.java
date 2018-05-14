@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-/*@NamedQueries({
-        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id"),
-        @NamedQuery(name = Meal.DELETE_ALL, query = "DELETE FROM Meal m WHERE m.id=:id and m.user.id=:userId"),
-        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m LEFT JOIN FETCH m.user.id ORDER BY m.dateTime desc ")
-})*/
+@NamedQueries({
+ /*       @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id"),
+        @NamedQuery(name = Meal.DELETE_ALL, query = "DELETE FROM Meal m WHERE m.id=:id and m.user.id=:userId"),*/
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m where m.user.id=:userId ORDER BY m.dateTime desc ")
+})
 @Entity
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}, name = "meals_pkey")})
 
@@ -51,6 +51,13 @@ public class Meal extends AbstractBaseEntity {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+    }
+    public Meal(Integer id, LocalDateTime dateTime, String description, int calories, User user) {
+        super(id);
+        this.dateTime = dateTime;
+        this.description = description;
+        this.calories = calories;
+        this.user = user;
     }
 
     public LocalDateTime getDateTime() {
@@ -97,9 +104,11 @@ public class Meal extends AbstractBaseEntity {
     public String toString() {
         return "Meal{" +
                 "id=" + id +
-                ", dateTime=" + dateTime +
+                "dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
-                '}';
+                ", user=" + user +
+                "}";
+
     }
 }

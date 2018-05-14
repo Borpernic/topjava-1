@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.repository.jpa;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 
 import javax.persistence.EntityManager;
@@ -21,23 +22,26 @@ public class JpaMealRepositoryImpl implements MealRepository {
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
-        if (meal.getUser().getId() != userId) {
-            meal = null;
+        if (meal.getUser() == null) {
+            meal.setUser(new User(userId, "", "", "", 0, true, null));
         }
         if (meal.isNew()) {
             em.persist(meal);
-        } else {
+        } else if (meal.getUser().getId() == userId) {
             em.merge(meal);
+        } else {
+            meal = null;
         }
-
         return meal;
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
         final Meal meal = em.getReference(Meal.class, id);
         if (meal.getUser().getId() == userId) {
             em.remove(meal);
+
             return true;
         }
         return false;
@@ -45,12 +49,18 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
+        Meal meal = em.find(Meal.class, id);
+        if (meal.getUser().getId() == userId) {
+            return meal;
+        }
         return null;
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return null;
+        return  em.createNamedQuery(Meal.ALL_SORTED, Meal.class).setParameter("userId", userId).getResultList();
+
+
     }
 
     @Override
