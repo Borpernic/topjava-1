@@ -9,7 +9,8 @@ import java.time.LocalTime;
 @NamedQueries({
  /*       @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id"),
         @NamedQuery(name = Meal.DELETE_ALL, query = "DELETE FROM Meal m WHERE m.id=:id and m.user.id=:userId"),*/
-        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m where m.user.id=:userId ORDER BY m.dateTime desc ")
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m where m.user.id=:userId ORDER BY m.dateTime desc "),
+        @NamedQuery(name = Meal.getBetween, query = "SELECT m FROM Meal m where m.user.id=:userId ORDER BY m.dateTime desc ")
 })
 @Entity
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}, name = "meals_pkey")})
@@ -19,6 +20,7 @@ public class Meal extends AbstractBaseEntity {
     public static final String DELETE = "Meal.delete";
     public static final String DELETE_ALL = "Meal.deleteAll";
     public static final String ALL_SORTED = "Meal.getAllSorted";
+    public static final String getBetween = "Meal.getBetween";
 
     @Column(name = "date_time", nullable = false)
     @NotNull
@@ -52,6 +54,7 @@ public class Meal extends AbstractBaseEntity {
         this.description = description;
         this.calories = calories;
     }
+
     public Meal(Integer id, LocalDateTime dateTime, String description, int calories, User user) {
         super(id);
         this.dateTime = dateTime;
