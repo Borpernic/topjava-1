@@ -58,13 +58,19 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return  em.createNamedQuery(Meal.ALL_SORTED, Meal.class).setParameter("userId", userId).getResultList();
+        return em.createNamedQuery(Meal.ALL_SORTED, Meal.class).setParameter("userId", userId).getResultList();
 
 
     }
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
+        List<Meal> meals = em.createNamedQuery(Meal.getBetween, Meal.class).setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .setParameter("userId", userId).getResultList();
+        meals.stream().filter(meal -> {
+            meal.getTime() <= endDate.toLocalTime();
+        });
         return null;
     }
 }
