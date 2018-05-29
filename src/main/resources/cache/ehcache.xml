@@ -21,5 +21,13 @@
         <heap>5000</heap>
     </cache-template>
 
+    <cache-template name="nonExpiryMealCache">
+        <expiry>
+            <none/>
+        </expiry>
+        <heap>6000</heap>
+    </cache-template>
+
     <cache alias="users" uses-template="nonExpiryCache"/>
+    <cache alias="meals" uses-template="nonExpiryMealCache"/>
 </config>
