@@ -43,11 +43,11 @@ public class UserServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+
     @Before
     public void setUp() {
         cacheManager.getCache("users").clear();
     }
-        
     @Test
     public void create() {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));

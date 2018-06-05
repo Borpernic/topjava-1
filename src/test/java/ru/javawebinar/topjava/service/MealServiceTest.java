@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -36,6 +38,9 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class MealServiceTest {
+
+    @Autowired
+    private CacheManager cacheManager;
     private static final Logger log = getLogger("result");
 
     private static StringBuilder results = new StringBuilder();
@@ -57,6 +62,11 @@ public class MealServiceTest {
             log.info(result + " ms\n");
         }
     };
+
+    @Before
+    public void setUp() {
+        cacheManager.getCache("meals").clear();
+    }
 
     @AfterClass
     public static void printResult() {
