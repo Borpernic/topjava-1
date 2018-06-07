@@ -3,10 +3,12 @@ package ru.javawebinar.topjava.repository.datajpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,15 +21,17 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     @Autowired
     private CrudMealRepository crudRepository;
     @Autowired
-    private CrudUserRepository crudUserRepository;
+    private UserService userService;
 
     @Override
     public Meal save(Meal meal, int userId) {
         //if (meal.getUser().getId() == userId) return crudRepository.save(meal);
-        if (null == meal.getUser()) {
-            meal.setUser(crudUserRepository.getOne(userId));
+        if (userService.get(userId) != null) {
+            meal.setUser(userService.get(userId));
+        } else {
+            return null;
         }
-        if (meal.getUser().getId() != userId) return null;
+        if (meal.getUser().getId() != userId || AuthorizedUser.id() != userId) return null;
         // if (meal.isNew()) {
         return crudRepository.save(meal);
         // }
