@@ -3,5 +3,15 @@ package ru.javawebinar.topjava;
 import javax.validation.groups.Default;
 
 public class View {
-    public interface Persist extends Default {}
+    public interface Persist extends Default {
+
+    }
+
+    public class JsonREST {
+    }
+
+    public class JsonUI{}
+
+    public class ValidatedUI {
+    }
 }
